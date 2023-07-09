@@ -1,0 +1,29 @@
+server:
+  port: 8888
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/member?serverTimezone=Asia/Seoul
+    username: root
+    password: 123456789
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: false #
+    properties:
+      hibernate:
+        format_sql: true
+    jackson:
+      time-zone: Asia/Seoul
+logging:
+  level:
+    org.hibernate.type: trace
+    com.zaxxer.hikari: trace
+    com.zaxxer.HikariConfig: DEBUG

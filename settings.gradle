@@ -1,0 +1,6 @@
+rootProject.name = 'kakaotalk-gift'
+include 'gift-api'
+include 'gift-redis'
+include 'gift-core'
+include 'gift-commons'
+
