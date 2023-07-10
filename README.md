@@ -41,5 +41,10 @@
 
 ![스크린샷 2023-07-09 오후 10 51 05](https://github.com/kdg0209/kakaotalk-gift-time-attack/assets/80187200/b0d0a514-48f9-4b26-8679-b71597f1deb1)
 
+<br>
 
+### DB 스키마 
+<hr>
+
+![스크린샷 2023-07-10 오후 10 47 45](https://github.com/kdg0209/kakaotalk-gift-time-attack/assets/80187200/39957a97-edb1-4007-8146-34eca149f8e3)
 
