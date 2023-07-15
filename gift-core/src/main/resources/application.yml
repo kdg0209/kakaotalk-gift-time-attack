@@ -6,9 +6,9 @@ spring:
     port: 6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/member?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3307/kakaotalkgift?serverTimezone=Asia/Seoul
     username: root
-    password: 123456789
+    password: 12345
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect

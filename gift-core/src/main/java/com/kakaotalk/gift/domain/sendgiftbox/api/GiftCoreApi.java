@@ -1,4 +1,4 @@
-package com.kakaotalk.gift.domain.gift.api;
+package com.kakaotalk.gift.domain.sendgiftbox.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
