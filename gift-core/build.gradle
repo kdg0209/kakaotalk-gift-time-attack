@@ -5,33 +5,32 @@ buildscript {
 }
 
 plugins {
-    id 'java'
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
-group 'com.kakaotalk.gift'
-version '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
+    implementation project(':gift-commons')
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    // test code h2database
+    runtimeOnly 'com.h2database:h2'
 }
 
-tasks.named('bootJar'){ // bootJar 세팅을 켜기
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jar {
     enabled = true
 }
 
-tasks.named('jar'){ // jar 설정은 끄기
+bootJar {
     enabled = false
 }
-
 
 //querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"

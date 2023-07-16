@@ -37,4 +37,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<ReceivedGiftBox> receivedGiftBoxes = new ArrayList<>();
+
+    public Member(String id) {
+        this.id = id;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public Long getIdx() {
+        return idx;
+    }
 }
