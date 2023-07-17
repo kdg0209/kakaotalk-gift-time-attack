@@ -1,4 +1,4 @@
-package com.kakaotalk.gift.domain.member.application.common;
+package com.kakaotalk.gift.common;
 
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
