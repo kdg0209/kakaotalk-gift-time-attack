@@ -1,6 +1,7 @@
 package com.kakaotalk.gift.domain.member.domain;
 
 import com.kakaotalk.gift.domain.openroom.domain.OpenRoom;
+import com.kakaotalk.gift.domain.openroom.domain.OpenRoomMapping;
 import com.kakaotalk.gift.domain.receivedgiftbox.domain.ReceivedGiftBox;
 import com.kakaotalk.gift.domain.sendgiftbox.domian.SendGiftBox;
 import lombok.AccessLevel;
@@ -31,6 +32,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<OpenRoom> openRooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<OpenRoomMapping> openRoomMappings = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<SendGiftBox> sendGiftBoxes = new ArrayList<>();

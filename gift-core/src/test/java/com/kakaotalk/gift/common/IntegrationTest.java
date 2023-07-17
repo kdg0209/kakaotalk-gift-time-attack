@@ -1,4 +1,4 @@
-package com.kakaotalk.gift.domain.member.application.common;
+package com.kakaotalk.gift.common;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
