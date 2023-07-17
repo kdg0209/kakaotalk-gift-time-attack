@@ -1,7 +1,12 @@
 package com.kakaotalk.gift;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class CommonsApplication {
+
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        SpringApplication.run(CommonsApplication.class, args);
     }
 }

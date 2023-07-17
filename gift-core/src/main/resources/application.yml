@@ -12,11 +12,9 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: update
-    generate-ddl: false #
     properties:
       hibernate:
         format_sql: true
@@ -25,5 +23,5 @@ spring:
 logging:
   level:
     org.hibernate.type: trace
-    com.zaxxer.hikari: trace
-    com.zaxxer.HikariConfig: DEBUG
+    #com.zaxxer.hikari: trace
+    #com.zaxxer.HikariConfig: DEBUG

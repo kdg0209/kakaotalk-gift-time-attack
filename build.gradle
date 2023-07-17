@@ -32,21 +32,6 @@ subprojects {
 		annotationProcessor 'org.projectlombok:lombok'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-		annotationProcessor 'org.projectlombok:lombok'
 		testImplementation 'org.assertj:assertj-core:3.24.1'
-	}
-
-	//빌드할 때 bootjar 파일로 하겠다는 의미
-	tasks.named('bootJar') {
-		enabled = false
-	}
-
-	//빌드할 때 jar 파일로 하겠다는 의미
-	tasks.named('jar') {
-		enabled = true
-	}
-
-	tasks.named('test') {
-		useJUnitPlatform()
 	}
 }
