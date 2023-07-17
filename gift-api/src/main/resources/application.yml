@@ -9,3 +9,17 @@ spring:
     url: jdbc:mysql://localhost:3307/kakaotalkgift?serverTimezone=Asia/Seoul
     username: root
     password: 12345
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    jackson:
+      time-zone: Asia/Seoul
+logging:
+  level:
+    org.hibernate.type: trace

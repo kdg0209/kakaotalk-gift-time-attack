@@ -49,4 +49,8 @@ public class OpenRoom {
     public String code() {
         return this.participationCode.code();
     }
+
+    public Long getIdx() {
+        return idx;
+    }
 }
