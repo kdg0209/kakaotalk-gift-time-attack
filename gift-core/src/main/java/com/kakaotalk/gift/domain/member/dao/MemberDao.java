@@ -48,6 +48,7 @@ public class MemberDao {
         if (id == null) return null;
         return member.id.eq(id);
     }
+
     private BooleanExpression eqMemberIdx(Long idx) {
         if (idx == null) return null;
         return member.idx.eq(idx);
