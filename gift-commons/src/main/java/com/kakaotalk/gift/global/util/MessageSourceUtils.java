@@ -29,4 +29,8 @@ public final class MessageSourceUtils {
     public static String getMessage(ErrorCode errorCode) {
         return messageSource.getMessage(errorCode.getCode(), null, LocaleContextHolder.getLocale());
     }
+
+    public static String getMessage(ErrorCode errorCode, String[] message) {
+        return messageSource.getMessage(errorCode.getCode(), message, LocaleContextHolder.getLocale());
+    }
 }
