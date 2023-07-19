@@ -27,4 +27,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleException(BusinessException e) {
         return new ResponseEntity<>(ErrorResponse.of(CODE_500, getMessage(e.getErrorCode())), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(CustomIllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleException(CustomIllegalArgumentException e) {
+        return new ResponseEntity<>(ErrorResponse.of(CODE_400, getMessage(e.getErrorCode(), e.getMessages())), HttpStatus.BAD_REQUEST);
+    }
 }
