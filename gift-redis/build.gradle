@@ -1,22 +1,15 @@
-plugins {
-    id 'java'
-}
-
-group 'com.kakaotalk.gift'
-version '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
+    implementation project(':gift-core')
+    implementation project(':gift-commons')
 
+    // redisson
+    implementation 'org.redisson:redisson-spring-boot-starter:3.18.0'
 }
 
-tasks.named('bootJar'){ // bootJar 세팅을 켜기
+jar {
     enabled = true
 }
 
-tasks.named('jar'){ // jar 설정은 끄기
+bootJar {
     enabled = false
 }
