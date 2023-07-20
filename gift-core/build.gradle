@@ -18,6 +18,9 @@ dependencies {
 
     // test code h2database
     runtimeOnly 'com.h2database:h2'
+
+    // redisson
+    implementation 'org.redisson:redisson-spring-boot-starter:3.18.0'
 }
 
 tasks.named('test') {
