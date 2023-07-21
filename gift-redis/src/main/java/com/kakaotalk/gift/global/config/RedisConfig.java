@@ -1,6 +1,5 @@
 package com.kakaotalk.gift.global.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -10,15 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
 
     private static final String REDISSON_HOST_PREFIX = "redis://";
-    private static final String TOPIC_NAME = "GIFT";
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Value("${spring.redis.host}")
     private String host;
@@ -39,38 +36,16 @@ public class RedisConfig {
         return new RedissonConnectionFactory(redissonClient());
     }
 
+    /**
+     * setValueSerializer(new GenericJackson2JsonRedisSerializer()) 메서드를 사용하여 java Object를 redis에 저장
+     */
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());        // key 깨짐 방지
-        redisTemplate.setValueSerializer(new StringRedisSerializer());      // value 깨짐 방지
-
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         return redisTemplate;
     }
-
-    @Bean
-    ChannelTopic topic() {
-        return new ChannelTopic(TOPIC_NAME);
-    }
-
-//    /**
-//     * redis listener adapter
-//     */
-//    @Bean
-//    MessageListenerAdapter messageListenerAdapter() {
-//        return new MessageListenerAdapter(new ReceivedGiftService());
-//    }
-//
-//    /**
-//     * redis message listener container
-//     */
-//    @Bean
-//    RedisMessageListenerContainer redisContainer() {
-//        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-//        container.setConnectionFactory(redisConnectionFactory());
-//        container.addMessageListener(messageListenerAdapter(), topic());
-//
-//        return container;
-//    }
 }
