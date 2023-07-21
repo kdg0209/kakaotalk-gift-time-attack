@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class SendGiftBoxCreateResponse {
 
-    private final long sendGiftBoxIdx;
+    private final String giftSerialCode;
 
-    public SendGiftBoxCreateResponse(long sendGiftBoxIdx) {
-        this.sendGiftBoxIdx = sendGiftBoxIdx;
+    public SendGiftBoxCreateResponse(String giftSerialCode) {
+        this.giftSerialCode = giftSerialCode;
     }
 }

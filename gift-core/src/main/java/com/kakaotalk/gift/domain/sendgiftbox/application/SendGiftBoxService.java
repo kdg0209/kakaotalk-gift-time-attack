@@ -19,13 +19,12 @@ public class SendGiftBoxService {
     private final OpenRoomDao openRoomDao;
     private final SendGiftBoxRepository sendGiftBoxRepository;
 
-    public Long create(Long memberIdx, String openRoomCode, String giftName, int giftQuantity) {
+    public String create(Long memberIdx, String openRoomCode, String giftName, int giftQuantity) {
         Member member = memberDao.findByIdx(memberIdx);
         OpenRoom openRoom = openRoomDao.findByCode(openRoomCode);
 
         SendGiftBox sendGiftBox = new SendGiftBox(member, openRoom.code(), giftName, giftQuantity);
         sendGiftBoxRepository.save(sendGiftBox);
-
-        return sendGiftBox.getIdx();
+        return sendGiftBox.getGiftSerialCode();
     }
 }

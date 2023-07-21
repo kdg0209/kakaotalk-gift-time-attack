@@ -22,7 +22,7 @@ public class ReceivedGiftBoxApi {
 
     @PostMapping
     public BaseResponse<Void> create(@Valid @RequestBody ReceivedGiftBoxCreateRequest request) {
-        redisAddQueue.addQueue(request.getMemberId(), request.getParticipationCode());
+        redisAddQueue.addQueue(request.getGiftSerialCode(), request.getMemberId(), request.getParticipationCode());
         return new BaseResponse<>(CODE_201);
     }
 }

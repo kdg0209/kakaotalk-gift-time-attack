@@ -19,8 +19,7 @@ public class OpenRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Comment(value = "오픈 채팅방 참여코드")
-    @Column(name = "participation_code", nullable = false, unique = true)
+    @Embedded
     private ParticipationCode participationCode;
 
     @Comment(value = "생성일")
