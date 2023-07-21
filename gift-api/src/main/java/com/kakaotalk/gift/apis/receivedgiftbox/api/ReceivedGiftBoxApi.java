@@ -3,7 +3,6 @@ package com.kakaotalk.gift.apis.receivedgiftbox.api;
 import com.kakaotalk.gift.apis.sendgiftbox.dto.ReceivedGiftBoxCreateRequest;
 import com.kakaotalk.gift.global.config.redis.RedisAddQueue;
 import com.kakaotalk.gift.global.response.BaseResponse;
-import com.kakaotalk.gift.global.util.EventType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +22,7 @@ public class ReceivedGiftBoxApi {
 
     @PostMapping
     public BaseResponse<Void> create(@Valid @RequestBody ReceivedGiftBoxCreateRequest request) {
-        redisAddQueue.addQueue(EventType.KAKAO_GIFT, request.getMemberId(), request.getParticipationCode());
+        redisAddQueue.addQueue(request.getMemberId(), request.getParticipationCode());
         return new BaseResponse<>(CODE_201);
     }
 }
