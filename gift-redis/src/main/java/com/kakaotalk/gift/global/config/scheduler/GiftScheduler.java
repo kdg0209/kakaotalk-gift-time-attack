@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
 import java.util.Set;
 
 @Slf4j
@@ -26,24 +27,29 @@ public class GiftScheduler {
     @Scheduled(fixedDelay = DELAY)
     public void giftEventScheduler() {
         Set<byte[]> keys = redisTemplate.getConnectionFactory().getConnection().keys("*".getBytes());
-        for (byte[] key : keys) {
+
+        Iterator<byte[]> iterator = keys.iterator();
+        while (iterator.hasNext()) {
+            byte[] key = iterator.next();
             String giftSerialCode = new String(key, 0, key.length);
 
             if (giftSerialCode.contains(":")) {
-                Object quantity = redisTemplate.opsForValue().get(giftSerialCode);
-                long availableQuantity = Long.parseLong(String.valueOf(quantity));
                 String[] split = giftSerialCode.split(":");
                 String secondKey = split[1];
-
-                if (availableQuantity <= 0) {
-                    log.info("선물하기 게임이 종료하였습니다.");
-                    redisTemplate.delete(giftSerialCode);
-                    break;
-                }
 
                 Set<Object> events = redisTemplate.opsForZSet().range(secondKey, MIN, MAX);
                 publisher.publishEvent(new ReceivedGiftCreatedEvent(events));
                 redisAddQueue.order();
+
+                Object o = redisTemplate.opsForValue().get(giftSerialCode);
+                if (o != null) {
+                    long quantity = Long.parseLong(o.toString());
+                    if (quantity <= 0) {
+                        log.info("선물하기 게임이 종료하였습니다. 남은 수량: "  + quantity);
+                        redisTemplate.delete(giftSerialCode);
+                        iterator.remove();
+                    }
+                }
             }
         }
     }

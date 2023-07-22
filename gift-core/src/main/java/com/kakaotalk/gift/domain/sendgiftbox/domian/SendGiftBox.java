@@ -10,6 +10,7 @@ import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "send_gift_box")
@@ -43,8 +44,8 @@ public class SendGiftBox {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne(mappedBy = "sendGiftBox")
-    private ReceivedGiftBox receivedGiftBox;
+    @OneToMany(mappedBy = "sendGiftBox", fetch = FetchType.LAZY)
+    private List<ReceivedGiftBox> receivedGiftBoxes;
 
     @Comment(value = "선물한 유저의 아이디")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -65,6 +66,17 @@ public class SendGiftBox {
 
     public String getGiftSerialCode() {
         return this.giftSerialCode.getGiftSerialCode();
+    }
+
+    public void decreaseAvailableQuantity() {
+        if (this.availableQuantity <= 0) {
+            return;
+        }
+        this.availableQuantity -= 1;
+    }
+
+    public boolean hasAvailableQuantity() {
+        return this.availableQuantity > 0;
     }
 
     private void validatorMember(Member member) {
