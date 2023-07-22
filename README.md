@@ -27,6 +27,11 @@
 
 <br>
 
+### APIs
+- https://github.com/kdg0209/kakaotalk-gift-time-attack/blob/main/API-DOC.md
+
+<br>
+
 ### 시나리오
 <hr>
 
