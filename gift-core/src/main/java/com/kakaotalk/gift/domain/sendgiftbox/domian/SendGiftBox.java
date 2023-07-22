@@ -24,6 +24,9 @@ public class SendGiftBox {
     @Column(name = "open_room_code", nullable = false, updatable = false)
     private String openRoomCode;
 
+    @Embedded
+    private GiftSerialCode giftSerialCode;
+
     @Comment(value = "선물의 이름")
     @Column(name = "gift_name", nullable = false)
     private String giftName;
@@ -53,14 +56,15 @@ public class SendGiftBox {
         validatorOpenRoomCode(openRoomCode);
         this.member = member;
         this.openRoomCode = openRoomCode;
+        this.giftSerialCode = new GiftSerialCode();
         this.giftName = giftName;
         this.giftQuantity = giftQuantity;
         this.availableQuantity = giftQuantity;
         this.createdAt = LocalDateTime.now();
     }
 
-    public Long getIdx() {
-        return idx;
+    public String getGiftSerialCode() {
+        return this.giftSerialCode.getGiftSerialCode();
     }
 
     private void validatorMember(Member member) {

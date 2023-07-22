@@ -1,11 +1,11 @@
 package com.kakaotalk.gift.global.config.redis;
 
 import com.kakaotalk.gift.infra.redis.util.Event;
-import com.kakaotalk.gift.infra.redis.util.EventType;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -23,21 +23,39 @@ public class RedisAddQueue {
     private final RedisTemplate<String, Object> redisTemplate;
 
     @SneakyThrows
-    public void addQueue(String memberId, String participationCode) {
+    public void addQueue(String giftSerialCode, String memberId, String participationCode) {
         long timeMillis = System.currentTimeMillis();
-        Event event = new Event(memberId, participationCode);
-        redisTemplate.opsForZSet().add(EventType.KAKAO_GIFT.name(), event, timeMillis);
+        Event event = new Event(giftSerialCode, memberId, participationCode);
+
+        redisTemplate.opsForZSet().add(event.secondKey(), event, timeMillis);
         log.info("대기열에 추가 - {} [{}]", event.getMemberId(), timeMillis);
     }
 
-    public void order() {
-        Set<Object> queue = redisTemplate.opsForZSet().range(EventType.KAKAO_GIFT.name(), MIN, Long.MAX_VALUE);
+    public void addGiftInformation(String giftSerialCode, String giftName, int giftQuantity) {
+        ValueOperations<String, Object> operations = redisTemplate.opsForValue();
+        operations.set(giftSerialCode, giftQuantity);
 
-        for (Object o : queue) {
-            if (o instanceof Event) {
-                Long rank = redisTemplate.opsForZSet().rank(EventType.KAKAO_GIFT.name(), o);
-                Event e = (Event) o;
-                log.info("'{}'님의 현재 대기열은 {}명 남았습니다.", e.getMemberId(), rank);
+        log.info("{} 선물이 도착하였습니다. 참여코드 - {}", giftName, giftSerialCode);
+    }
+
+    public void order() {
+        Set<byte[]> keys = redisTemplate.getConnectionFactory().getConnection().keys("*".getBytes());
+        for (byte[] key : keys) {
+            String giftSerialCode = new String(key, 0, key.length);
+
+            if (giftSerialCode.contains(":")) {
+                String[] split = giftSerialCode.split(":");
+                String secondKey = split[1];
+                Set<Object> queue = redisTemplate.opsForZSet().range(secondKey, MIN, Long.MAX_VALUE);
+
+                for (Object o : queue) {
+                    if (o instanceof Event) {
+                        Event e = (Event) o;
+                        Long rank = redisTemplate.opsForZSet().rank(e.secondKey(), o);
+
+                        log.info("'{}'님의 현재 대기열은 {}명 남았습니다.", e.getMemberId(), rank);
+                    }
+                }
             }
         }
     }

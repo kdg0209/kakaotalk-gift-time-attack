@@ -2,7 +2,6 @@ package com.kakaotalk.gift.domain.receivedgiftbox.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kakaotalk.gift.infra.redis.util.Event;
-import com.kakaotalk.gift.infra.redis.util.EventType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,9 +24,9 @@ public class ReceivedGiftService {
             if (event instanceof Event) {
                 Event e = (Event) event;
                 log.info("{} 님이 기프티콘에 당첨되었습니다.", e.getMemberId());
+                redisTemplate.opsForValue().decrement(e.getGiftSerialCode());
+                redisTemplate.opsForZSet().remove(e.secondKey(), event);
             }
-
-            redisTemplate.opsForZSet().remove(EventType.KAKAO_GIFT.name(), event);
         }
     }
 }

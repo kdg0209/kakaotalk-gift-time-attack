@@ -1,4 +1,4 @@
-package com.kakaotalk.gift.domain.openroom.domain;
+package com.kakaotalk.gift.domain.sendgiftbox.domian;
 
 import org.hibernate.annotations.Comment;
 
@@ -8,12 +8,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * 오픈 채팅방 참여 코드는 중복을 방지하기 위해 년월일시분과 랜덤 문자열을 포함하여 18자리로 구성
- * 2307172101 + 랜덤 문자열
- */
 @Embeddable
-public class ParticipationCode {
+public class GiftSerialCode {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyMMddHHmm");
 
@@ -24,19 +20,19 @@ public class ParticipationCode {
     };
     private static final int CHARACTER_TABLE_LENGTH = CHARACTER_TABLE.length;
 
-    @Comment(value = "오픈 채팅방 참여코드")
-    @Column(name = "participation_code", nullable = false, unique = true)
-    private String participationCode;
+    @Comment(value = "선물 시리얼 코드")
+    @Column(name = "gift_serial_code", nullable = false, unique = true)
+    private String giftSerialCode;
 
-    public ParticipationCode() {
-        this.participationCode = generateCode();
+    public GiftSerialCode() {
+        this.giftSerialCode = generate() + ":" + generate();
     }
 
-    public String code() {
-        return this.participationCode;
+    public String getGiftSerialCode() {
+        return this.giftSerialCode;
     }
 
-    private String generateCode() {
+    private static String generate() {
         LocalDateTime now = LocalDateTime.now();
         String format = now.format(DATE_TIME_FORMATTER);
 
