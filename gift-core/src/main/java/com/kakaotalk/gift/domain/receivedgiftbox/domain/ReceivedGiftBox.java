@@ -1,6 +1,5 @@
 package com.kakaotalk.gift.domain.receivedgiftbox.domain;
 
-import com.kakaotalk.gift.domain.member.domain.Member;
 import com.kakaotalk.gift.domain.sendgiftbox.domian.SendGiftBox;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -18,16 +17,22 @@ public class ReceivedGiftBox {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
+    @Comment(value = "유저의 아이디")
+    @Column(name = "member_id", nullable = false, updatable = false)
+    private String memberId;
+
     @Comment(value = "생성일")
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @Comment(value = "보낸 선물함의 PK")
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "send_gift_box_idx", foreignKey = @ForeignKey(name = "fk_received_gift_box_send_gift_box"))
     private SendGiftBox sendGiftBox;
 
-    @Comment(value = "유저의 아이디")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_idx", foreignKey = @ForeignKey(name = "fk_received_gift_box_member"))
-    private Member member;
+    public ReceivedGiftBox(String memberId, SendGiftBox sendGiftBox) {
+        this.memberId = memberId;
+        this.sendGiftBox = sendGiftBox;
+        this.createdAt = LocalDateTime.now();
+    }
 }
