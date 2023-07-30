@@ -1,6 +1,6 @@
 package com.kakaotalk.gift.apis.receivedgiftbox.api;
 
-import com.kakaotalk.gift.apis.sendgiftbox.dto.ReceivedGiftBoxCreateRequest;
+import com.kakaotalk.gift.apis.receivedgiftbox.dto.ReceivedGiftBoxCreateRequest;
 import com.kakaotalk.gift.global.config.redis.RedisAddQueue;
 import com.kakaotalk.gift.global.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
