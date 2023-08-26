@@ -1,7 +1,13 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.13'
+	id 'org.springframework.boot' version '2.7.13' apply(false)
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
 }
 
 allprojects {
@@ -11,12 +17,6 @@ allprojects {
 
 	repositories {
 		mavenCentral()
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
 	}
 }
 

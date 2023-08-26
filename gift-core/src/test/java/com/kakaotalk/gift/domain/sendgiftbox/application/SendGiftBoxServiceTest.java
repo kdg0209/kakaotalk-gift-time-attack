@@ -44,7 +44,7 @@ class SendGiftBoxServiceTest extends IntegrationTest {
         int giftQuantity = 10;
 
         // when
-        Long result = sendGiftBoxService.create(memberIdx, openRoomCode, giftName, giftQuantity);
+        String result = sendGiftBoxService.create(memberIdx, openRoomCode, giftName, giftQuantity);
 
         // then
         assertThat(result).isNotNull();
